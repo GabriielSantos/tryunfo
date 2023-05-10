@@ -3,9 +3,9 @@ import React from 'react';
 
 class Card extends React.Component {
   render() {
-    const { cardInfo } = this.props;
+    // const { cardInfo } = this.props;
     const { cardName, cardDescription, cardAttr1, cardAttr2,
-      cardAttr3, cardImage, cardRare, cardTrunfo } = cardInfo;
+      cardAttr3, cardImage, cardRare, cardTrunfo } = this.props;
 
     return (
       <div className="card">
@@ -29,18 +29,18 @@ class Card extends React.Component {
 }
 
 Card.propTypes = {
-  cardInfo: PropTypes.shape({
-    cardName: PropTypes.string.isRequired,
-    cardDescription: PropTypes.string.isRequired,
-    cardAttr1: PropTypes.string.isRequired,
-    cardAttr2: PropTypes.string.isRequired,
-    cardAttr3: PropTypes.string.isRequired,
-    cardImage: PropTypes.string.isRequired,
-    cardRare: PropTypes.string.isRequired,
-    cardTrunfo: PropTypes.bool.isRequired,
-    hasTrunfo: PropTypes.bool.isRequired,
-    isSaveButtonDisabled: PropTypes.bool.isRequired,
-  }).isRequired,
+  // cardInfo: PropTypes.shape({
+  cardName: PropTypes.string.isRequired,
+  cardDescription: PropTypes.string.isRequired,
+  cardAttr1: PropTypes.string.isRequired,
+  cardAttr2: PropTypes.string.isRequired,
+  cardAttr3: PropTypes.string.isRequired,
+  cardImage: PropTypes.string.isRequired,
+  cardRare: PropTypes.string.isRequired,
+  cardTrunfo: PropTypes.bool.isRequired,
+  // hasTrunfo: PropTypes.bool.isRequired,
+  // isSaveButtonDisabled: PropTypes.bool.isRequired,
+  // }).isRequired,
 };
 
 export default Card;
