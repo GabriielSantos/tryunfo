@@ -3,23 +3,25 @@ import React from 'react';
 
 class Card extends React.Component {
   render() {
+    const { cardInfo } = this.props;
     const { cardName, cardDescription, cardAttr1, cardAttr2,
-      cardAttr3, cardImage, cardRare, cardTrunfo } = this.props;
+      cardAttr3, cardImage, cardRare, cardTrunfo } = cardInfo;
 
     return (
       <div className="card">
-        <span data-testid="name-card">{ cardName }</span>
+        <p data-testid="name-card">{ cardName }</p>
 
         <img src={ cardImage } alt={ cardName } data-testid="image-card" />
 
         <p data-testid="description-card">{ cardDescription }</p>
 
-        <span data-testid="attr1-card">{ cardAttr1 }</span>
-        <span data-testid="attr2-card">{ cardAttr2 }</span>
-        <span data-testid="attr3-card">{ cardAttr3 }</span>
+        <div className="atributos">
+          <p data-testid="attr1-card">{ cardAttr1 }</p>
+          <p data-testid="attr2-card">{ cardAttr2 }</p>
+          <p data-testid="attr3-card">{ cardAttr3 }</p>
+        </div>
 
-        <span data-testid="rare-card">{ cardRare }</span>
-
+        <p data-testid="rare-card">{ cardRare }</p>
         { cardTrunfo && (<span data-testid="trunfo-card">Super Trunfo</span>)}
       </div>
     );
@@ -27,14 +29,18 @@ class Card extends React.Component {
 }
 
 Card.propTypes = {
-  cardName: PropTypes.string.isRequired,
-  cardDescription: PropTypes.string.isRequired,
-  cardAttr1: PropTypes.string.isRequired,
-  cardAttr2: PropTypes.string.isRequired,
-  cardAttr3: PropTypes.string.isRequired,
-  cardImage: PropTypes.string.isRequired,
-  cardRare: PropTypes.string.isRequired,
-  cardTrunfo: PropTypes.bool.isRequired,
+  cardInfo: PropTypes.shape({
+    cardName: PropTypes.string.isRequired,
+    cardDescription: PropTypes.string.isRequired,
+    cardAttr1: PropTypes.string.isRequired,
+    cardAttr2: PropTypes.string.isRequired,
+    cardAttr3: PropTypes.string.isRequired,
+    cardImage: PropTypes.string.isRequired,
+    cardRare: PropTypes.string.isRequired,
+    cardTrunfo: PropTypes.bool.isRequired,
+    hasTrunfo: PropTypes.bool.isRequired,
+    isSaveButtonDisabled: PropTypes.bool.isRequired,
+  }).isRequired,
 };
 
 export default Card;
