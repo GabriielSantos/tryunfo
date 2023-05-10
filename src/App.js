@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import Card from './components/Card';
+import CardList from './components/CardList';
 import Form from './components/Form';
 import validateLength from './utils/ValidateLength';
 import validateNumber from './utils/ValidateNumber';
@@ -77,69 +78,95 @@ class App extends React.Component {
         savedCards: [...prev.cardDeck.savedCards, saveCard],
       },
     }), () => {
-      this.setState((prev) => ((this.trunfoVerify())
-        ? {
-          cardInfo: {
-            ...prev.cardInfo,
-            cardName: '',
-            cardDescription: '',
-            cardAttr1: '0',
-            cardAttr2: '0',
-            cardAttr3: '0',
-            cardImage: '',
-            cardRare: 'Normal',
-            cardTrunfo: false,
-            hasTrunfo: true,
-          },
-        } : ({
-          cardInfo: {
-            ...prev.cardInfo,
-            cardName: '',
-            cardDescription: '',
-            cardAttr1: '0',
-            cardAttr2: '0',
-            cardAttr3: '0',
-            cardImage: '',
-            cardRare: 'Normal',
-            cardTrunfo: false,
-          },
-        })));
+      this.setState((prev) => ((this.trunfoVerify()) ? {
+        cardInfo: {
+          ...prev.cardInfo,
+          cardName: '',
+          cardDescription: '',
+          cardAttr1: '0',
+          cardAttr2: '0',
+          cardAttr3: '0',
+          cardImage: '',
+          cardRare: 'Normal',
+          cardTrunfo: false,
+          hasTrunfo: true,
+        },
+      } : ({
+        cardInfo: {
+          ...prev.cardInfo,
+          cardName: '',
+          cardDescription: '',
+          cardAttr1: '0',
+          cardAttr2: '0',
+          cardAttr3: '0',
+          cardImage: '',
+          cardRare: 'Normal',
+          cardTrunfo: false,
+        },
+      })));
     });
   };
 
+  deleteCard = (target) => {
+    const { cardDeck: { savedCards } } = this.state;
+
+    const filterCard = savedCards.filter((card) => (card.cardName !== target));
+    console.log(filterCard);
+
+    this.setState((prev) => ({
+      cardDeck: {
+        ...prev.cardDeck,
+        savedCards: filterCard,
+      },
+      cardInfo: {
+        ...prev.cardInfo,
+        hasTrunfo: false,
+      },
+    }));
+  };
+
   render() {
-    const { cardInfo } = this.state;
+    const { cardInfo, cardDeck: { savedCards } } = this.state;
 
     return (
-      <div className="grid">
-        <Form
-          className="left wrapper"
-          cardName={ cardInfo.cardName }
-          cardDescription={ cardInfo.cardDescription }
-          cardAttr1={ cardInfo.cardAttr1 }
-          cardAttr2={ cardInfo.cardAttr2 }
-          cardAttr3={ cardInfo.cardAttr3 }
-          cardImage={ cardInfo.cardImage }
-          cardRare={ cardInfo.cardRare }
-          cardTrunfo={ cardInfo.cardTrunfo }
-          hasTrunfo={ cardInfo.hasTrunfo }
-          isSaveButtonDisabled={ cardInfo.isSaveButtonDisabled }
-          onInputChange={ this.onInputChange }
-          validateForm={ this.validateForm }
-          onSaveButtonClick={ this.onSaveButtonClick }
-          trunfoVerify={ this.trunfoVerify }
-        />
-        <Card
-          className="right wrapper"
-          cardName={ cardInfo.cardName }
-          cardDescription={ cardInfo.cardDescription }
-          cardAttr1={ cardInfo.cardAttr1 }
-          cardAttr2={ cardInfo.cardAttr2 }
-          cardAttr3={ cardInfo.cardAttr3 }
-          cardImage={ cardInfo.cardImage }
-          cardRare={ cardInfo.cardRare }
-          cardTrunfo={ cardInfo.cardTrunfo }
-        />
+      <div className="container">
+        <header>
+          <h1>Tryunfo</h1>
+        </header>
+        <div className="cadastrateCard">
+          <Form
+            cardName={ cardInfo.cardName }
+            cardDescription={ cardInfo.cardDescription }
+            cardAttr1={ cardInfo.cardAttr1 }
+            cardAttr2={ cardInfo.cardAttr2 }
+            cardAttr3={ cardInfo.cardAttr3 }
+            cardImage={ cardInfo.cardImage }
+            cardRare={ cardInfo.cardRare }
+            cardTrunfo={ cardInfo.cardTrunfo }
+            hasTrunfo={ cardInfo.hasTrunfo }
+            isSaveButtonDisabled={ cardInfo.isSaveButtonDisabled }
+            onInputChange={ this.onInputChange }
+            validateForm={ this.validateForm }
+            onSaveButtonClick={ this.onSaveButtonClick }
+            trunfoVerify={ this.trunfoVerify }
+          />
+          <Card
+            cardName={ cardInfo.cardName }
+            cardDescription={ cardInfo.cardDescription }
+            cardAttr1={ cardInfo.cardAttr1 }
+            cardAttr2={ cardInfo.cardAttr2 }
+            cardAttr3={ cardInfo.cardAttr3 }
+            cardImage={ cardInfo.cardImage }
+            cardRare={ cardInfo.cardRare }
+            cardTrunfo={ cardInfo.cardTrunfo }
+          />
+        </div>
+        <div className="deckCards">
+          <CardList
+            savedCards={ savedCards }
+            deleteCard={ this.deleteCard }
+          />
+        </div>
       </div>
     );
   }

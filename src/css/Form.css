@@ -1,10 +1,26 @@
 .form {
-  height: 200px;
-  margin-left: 250px;
+  align-items: center;
+  background-color: lightgreen;
+  border: 2px solid black;
+  display: block;
+  height: 80%;
+  justify-content: center;
+  margin: auto;
+  width: 600px;
 }
 
-input, label {
+input, label, select, option {
   display: block;
+  font-size: 20px;
+}
+
+input {
   height: 30px;
+}
+
+button {
+  background-color: rebeccapurple;
+  color: white;
+  height: 50px;
   width: 200px;
 }
