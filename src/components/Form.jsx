@@ -11,8 +11,7 @@ class Form extends React.Component {
       cardTrunfo, hasTrunfo, isSaveButtonDisabled } = this.props;
 
     return (
-      <form className="form">
-        <h2>Adicione Nova Carta</h2>
+      <form className="form-container">
 
         <label htmlFor="name">Nome</label>
         <input
@@ -24,18 +23,21 @@ class Form extends React.Component {
           onChange={ onInputChange }
         />
 
-        <label htmlFor="description">Descrição</label>
-        <input
-          type="textarea"
-          name="cardDescription"
-          id="description"
-          data-testid="description-input"
-          value={ cardDescription }
-          onChange={ onInputChange }
-        />
+        <div className="input-container">
+          <label htmlFor="description">Descrição</label>
+          <input
+            type="textarea"
+            name="cardDescription"
+            id="description"
+            data-testid="description-input"
+            value={ cardDescription }
+            onChange={ onInputChange }
+          />
+        </div>
 
         <label htmlFor="attr1">Attr 01</label>
         <input
+          className="cardAttr"
           type="number"
           name="cardAttr1"
           id="attr1"
@@ -46,6 +48,7 @@ class Form extends React.Component {
 
         <label htmlFor="attr2">Attr 02</label>
         <input
+          className="cardAttr"
           type="number"
           name="cardAttr2"
           id="attr2"
@@ -56,6 +59,7 @@ class Form extends React.Component {
 
         <label htmlFor="attr3">Attr 03</label>
         <input
+          className="cardAttr"
           type="number"
           name="cardAttr3"
           id="attr3"
@@ -74,41 +78,46 @@ class Form extends React.Component {
           onChange={ onInputChange }
         />
 
-        <select
-          name="cardRare"
-          id="raridade"
-          data-testid="rare-input"
-          value={ cardRare }
-          onChange={ onInputChange }
-        >
-          Raridade
-          <option value="normal">Normal</option>
-          <option value="raro">Raro</option>
-          <option value="muito raro">Muito Raro</option>
-        </select>
+        <div className="input-container">
+          <select
+            name="cardRare"
+            id="raridade"
+            data-testid="rare-input"
+            value={ cardRare }
+            onChange={ onInputChange }
+          >
+            Raridade
+            <option value="normal">Normal</option>
+            <option value="raro">Raro</option>
+            <option value="muito raro">Muito Raro</option>
+          </select>
+        </div>
 
-        { hasTrunfo ? <p>Você já tem um Super Trunfo em seu baralho</p>
-          : (
-            <label>
-              Super Trybe Trunfo
-              <input
-                type="checkbox"
-                data-testid="trunfo-input"
-                checked={ cardTrunfo }
-                onChange={ onInputChange }
-                value={ cardTrunfo }
-                name="cardTrunfo"
-              />
-            </label>)}
+        <div className="submit-container">
+          { hasTrunfo ? <p>Você já tem um Super Trunfo em seu baralho</p>
+            : (
+              <label>
+                Super Trybe Trunfo
+                <input
+                  type="checkbox"
+                  data-testid="trunfo-input"
+                  checked={ cardTrunfo }
+                  onChange={ onInputChange }
+                  value={ cardTrunfo }
+                  name="cardTrunfo"
+                />
+              </label>)}
 
-        <button
-          type="submit"
-          data-testid="save-button"
-          disabled={ isSaveButtonDisabled }
-          onClick={ onSaveButtonClick }
-        >
-          Salvar
-        </button>
+          <button
+            type="submit"
+            data-testid="save-button"
+            disabled={ isSaveButtonDisabled }
+            onClick={ onSaveButtonClick }
+          >
+            Salvar
+          </button>
+        </div>
+
       </form>
 
     );

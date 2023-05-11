@@ -9,22 +9,43 @@ class Card extends React.Component {
       cardAttr3, cardImage, cardRare, cardTrunfo } = this.props;
 
     return (
-      <div className="card">
-        <p data-testid="name-card">{ cardName }</p>
+      <div className="card-back">
+        <div className="card-container">
 
-        <img src={ cardImage } alt={ cardName } data-testid="image-card" />
+          <div className="name-card">
+            <p data-testid="name-card">{ cardName }</p>
+          </div>
 
-        <p data-testid="description-card">{ cardDescription }</p>
+          <div className="image-card">
+            <img src={ cardImage } alt={ cardName } data-testid="image-card" />
+            { cardTrunfo && (
+              <p data-testid="trunfo-card" className="trunfo-card">Super Trunfo</p>)}
+          </div>
 
-        <div className="atributos">
-          <p data-testid="attr1-card">{ cardAttr1 }</p>
-          <p data-testid="attr2-card">{ cardAttr2 }</p>
-          <p data-testid="attr3-card">{ cardAttr3 }</p>
+          <div className="description-card">
+            <p data-testid="description-card">{ cardDescription }</p>
+          </div>
+
+          <div className="attr-card-container">
+            <div className="attr-p">
+              <p>Attr01....................................</p>
+              <span data-testid="attr1-card">{cardAttr1}</span>
+            </div>
+            <div className="attr-p">
+              <p>Attr02....................................</p>
+              <span data-testid="attr2-card">{cardAttr2}</span>
+            </div>
+            <div className="attr-p">
+              <p>Attr03....................................</p>
+              <span data-testid="attr3-card">{cardAttr3}</span>
+            </div>
+            <p data-testid="rare-card">{cardRare}</p>
+          </div>
+
         </div>
 
-        <p data-testid="rare-card">{ cardRare }</p>
-        { cardTrunfo && (<span data-testid="trunfo-card">Super Trunfo</span>)}
       </div>
+
     );
   }
 }

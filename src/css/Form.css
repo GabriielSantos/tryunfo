@@ -1,26 +1,55 @@
-.form {
-  align-items: center;
-  background-color: lightgreen;
-  border: 2px solid black;
-  display: block;
-  height: 80%;
+.form-container {
+  align-items: flex-start;
+  color: #3d495c;
+  display: flex;
+  flex-direction: column;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 700;
+  height: 85%;
   justify-content: center;
-  margin: auto;
-  width: 600px;
+  margin-left: 50px;
+  width: 100%;
 }
 
-input, label, select, option {
-  display: block;
-  font-size: 20px;
+.input-container {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin: 10px;
 }
 
-input {
-  height: 30px;
+.cardAttr {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 50%;
 }
 
-button {
-  background-color: rebeccapurple;
-  color: white;
-  height: 50px;
-  width: 200px;
+.cardAttr label {
+  margin-right: 10px;
+}
+
+.submit-container {
+  align-items: center;
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.submit-container button {
+  background: #2fc18c;
+  border: none;
+  border-radius: 2px;
+  height: 2.5rem;
+  width: 6rem;
+}
+
+.submit-container button:disabled {
+  background-color: #52575f;
+}
+
+.submit-container label input {
+  margin-left: 10px;
 }

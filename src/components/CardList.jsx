@@ -4,12 +4,12 @@ import Card from './Card';
 
 class CardList extends React.Component {
   render() {
-    const { savedCards, deleteCard } = this.props;
+    const { filterCards, deleteCard } = this.props;
     return (
       <div className="cardList-container">
         {
-          savedCards.map((card) => (
-            <div key={ card.cardName }>
+          filterCards.map((card) => (
+            <div className="card-save-container" key={ card.cardName }>
               <Card
                 cardName={ card.cardName }
                 cardDescription={ card.cardDescription }
@@ -36,7 +36,7 @@ class CardList extends React.Component {
 }
 
 CardList.propTypes = {
-  savedCards: PropTypes.arrayOf(
+  filterCards: PropTypes.arrayOf(
     PropTypes.shape({
       cardName: PropTypes.string.isRequired,
       cardDescription: PropTypes.string.isRequired,
