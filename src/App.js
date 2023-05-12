@@ -144,7 +144,7 @@ class App extends React.Component {
       this.setState((prev) => ({
         filters: {
           ...prev.filters,
-          filterCards: filteredCard,
+          filter: filteredCard,
         },
       }));
     });
@@ -184,7 +184,8 @@ class App extends React.Component {
   };
 
   render() {
-    const { cardInfo, filters: { filterCards, superTrunfoCheck } } = this.state;
+    const { cardInfo, cardDeck: { savedCards },
+      filters: { superTrunfoCheck } } = this.state;
 
     return (
       <div>
@@ -230,15 +231,15 @@ class App extends React.Component {
 
         <div className="filters">
           <FilterCard
-            filterName={ this.filterName }
-            filterType={ this.filterType }
             filterTrunfo={ this.filterTrunfo }
+            filterType={ this.filterType }
+            filterName={ this.filterName }
             superTrunfoCheck={ superTrunfoCheck }
           />
         </div>
         <div className="deckCards">
           <CardList
-            filterCards={ filterCards }
+            savedCards={ savedCards }
             deleteCard={ this.deleteCard }
           />
         </div>

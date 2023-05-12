@@ -3,13 +3,14 @@ import React from 'react';
 
 class FilterCard extends React.Component {
   render() {
-    const { superTrunfoCheck, filterName, filterType, filterTrunfo } = this.props;
+    const { superTrunfoCheck, filterTrunfo, filterType, filterName } = this.props;
     return (
       <div className="filter-container">
 
         <span>Filtros de Busca</span>
 
         <input
+          name="cardName"
           type="text"
           data-testid="name-filter"
           placeholder="Nome da Carta"
@@ -18,6 +19,7 @@ class FilterCard extends React.Component {
         />
 
         <select
+          name="cardRare"
           data-testid="rare-filter"
           disabled={ superTrunfoCheck }
           onChange={ filterType }
@@ -32,6 +34,7 @@ class FilterCard extends React.Component {
           <label data-testid="trunfo-filter">
             Super Trunfo
             <input
+              name="cardTrunfo"
               type="checkbox"
               onChange={ filterTrunfo }
             />
@@ -44,9 +47,9 @@ class FilterCard extends React.Component {
 }
 
 FilterCard.propTypes = {
-  filterName: PropTypes.func.isRequired,
-  filterType: PropTypes.func.isRequired,
   filterTrunfo: PropTypes.func.isRequired,
+  filterType: PropTypes.func.isRequired,
+  filterName: PropTypes.func.isRequired,
   superTrunfoCheck: PropTypes.bool.isRequired,
 };
 export default FilterCard;
