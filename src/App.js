@@ -26,6 +26,7 @@ class App extends React.Component {
       savedCards: [],
     },
     filters: {
+      filterRare: '',
       filter: '',
       filterCards: [],
       superTrunfoCheck: false,
@@ -116,9 +117,7 @@ class App extends React.Component {
 
   deleteCard = (target) => {
     const { cardDeck: { savedCards } } = this.state;
-
     const filterCard = savedCards.filter((card) => (card.cardName !== target));
-    console.log(filterCard);
 
     this.setState((prev) => ({
       cardDeck: {
@@ -144,7 +143,7 @@ class App extends React.Component {
       this.setState((prev) => ({
         filters: {
           ...prev.filters,
-          filter: filteredCard,
+          filterCards: filteredCard,
         },
       }));
     });
@@ -164,6 +163,7 @@ class App extends React.Component {
     }) : ({
       filters: {
         ...prev.filters,
+        filterRare: target.value,
         filterCards: filter.length > 0 ? typeAndName : typeFilter,
       },
     })
@@ -173,7 +173,6 @@ class App extends React.Component {
   filterTrunfo = ({ target }) => {
     const { cardDeck: { savedCards } } = this.state;
     const findTrunfo = savedCards.find((card) => card.cardTrunfo === true);
-
     this.setState((prev) => ({
       filters: {
         ...prev.filters,
@@ -185,7 +184,7 @@ class App extends React.Component {
 
   render() {
     const { cardInfo, cardDeck: { savedCards },
-      filters: { superTrunfoCheck } } = this.state;
+      filters: { superTrunfoCheck, filterCards, filter, filterRare } } = this.state;
 
     return (
       <div>
@@ -226,9 +225,7 @@ class App extends React.Component {
             />
           </div>
         </div>
-
         <h2 className="title-cardList">Todas as Cartas</h2>
-
         <div className="filters">
           <FilterCard
             filterTrunfo={ this.filterTrunfo }
@@ -239,7 +236,10 @@ class App extends React.Component {
         </div>
         <div className="deckCards">
           <CardList
+            filterRare={ filterRare }
+            filter={ filter }
             savedCards={ savedCards }
+            filterCards={ filterCards }
             deleteCard={ this.deleteCard }
           />
         </div>
