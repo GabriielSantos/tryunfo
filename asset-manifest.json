@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/app-toot-name/static/css/main.ec4d3afe.css",
-    "main.js": "/app-toot-name/static/js/main.580443e2.js",
+    "main.js": "/app-toot-name/static/js/main.85f9df68.js",
     "static/media/daysGone.png": "/app-toot-name/static/media/daysGone.76ee38bf975366c35256.png",
     "static/media/ResidentEvil.png": "/app-toot-name/static/media/ResidentEvil.fbc1b22a6c5800a95315.png",
     "static/media/spiderMan.png": "/app-toot-name/static/media/spiderMan.0b1db12c700c45f13e6a.png",
@@ -32,10 +32,10 @@
     "static/media/click_sound.mp3": "/app-toot-name/static/media/click_sound.238d39a7566205adcacf.mp3",
     "index.html": "/app-toot-name/index.html",
     "main.ec4d3afe.css.map": "/app-toot-name/static/css/main.ec4d3afe.css.map",
-    "main.580443e2.js.map": "/app-toot-name/static/js/main.580443e2.js.map"
+    "main.85f9df68.js.map": "/app-toot-name/static/js/main.85f9df68.js.map"
   },
   "entrypoints": [
     "static/css/main.ec4d3afe.css",
-    "static/js/main.580443e2.js"
+    "static/js/main.85f9df68.js"
   ]
 }
