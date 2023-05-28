@@ -1,0 +1,159 @@
+.Card {
+  align-items: center;
+  background-color: #282828;
+  border: 5px solid transparent;
+  border-radius: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 420px;
+  justify-content: center;
+  padding: 10px;
+  text-align: center;
+
+}
+
+.Card__container {
+  background: linear-gradient(#595cba, #e47feb);
+  border-radius: 4px;
+  box-shadow: 10px 10px 8px black;
+  outline: 8px solid #282828;
+  overflow: hidden;
+  padding: 2px;
+  transition: all 0.5s;
+  width: 250px;
+}
+
+.Card__img {
+  height: 220px;
+  pointer-events: none;
+  width: 200px;
+  z-index: 4;
+}
+
+.CardPc {
+  background-image: url('../../media/images/logo4.png');
+  background-position-x: 30%;
+  background-position-y: 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  height: 380px;
+  margin-top: 30px;
+  opacity: 0.7;
+  position: absolute;
+  width: 246px;
+}
+
+.CardPc > h3 {
+  background-color: black;
+  font-weight: 700;
+  margin: auto;
+  margin-top: -35px;
+  padding: 8px;
+}
+
+.desc {
+  text-align: justify;
+}
+
+.container-imgTrunfo {
+  height: 100px;
+  width: 150px;
+
+}
+
+.img_trunfo {
+  background-image: url('../../media/images/logo2.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 100px;
+  left: 130px;
+  pointer-events: none;
+  position: absolute;
+  top: 350px;
+  width: 150px;
+  z-index: 0;
+}
+
+.trunfo-text {
+  color: #d9f00cb0;
+  font-weight: 800;
+  position: fixed;
+  width: 70px;
+}
+
+.aviso {
+  margin-top: 120px;
+}
+
+.Card__container:hover {
+  background-color: black;
+}
+
+.delete-button {
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  color: white;
+  cursor: pointer;
+  font-size: larger;
+  height: 30px;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  transition: 0.4s;
+  width: 30px;
+}
+
+.delete-button:hover {
+  background-color: #d32525;
+  transform: scale(1.2) translateY(-5px);
+
+}
+
+.rare-card {
+  font-size: large;
+  text-transform: capitalize;
+}
+
+.foda {
+  color: #59ba76;
+}
+
+.muitofoda {
+  color: #ba5959;
+  font-size: larger;
+}
+
+.muitoraro:after, .muitoraro:before {
+  content: ' --- ';
+  letter-spacing: -2px;
+  word-spacing: 2px;
+}
+
+.attr:hover {
+  color: #5a59ba;
+  cursor: pointer;
+  transform: scale(1.2);
+}
+
+@keyframes shadowMoveCard {
+
+  from { box-shadow: 18px 18px 20px rgba(0, 0, 0, 0.7);
+    transform: perspective(1000px) rotateY(0deg);}
+
+  to { box-shadow: -18px 18px 20px rgba(0, 0, 0, 0.7);
+    transform: perspective(1000px) rotateY(0deg);}
+}
+
+@keyframes shadowMove_rotateHue {
+
+  from { box-shadow: 18px 18px 20px rgba(0, 0, 0, 0.7);
+    filter: hue-rotate(0deg);
+    transform: perspective(1000px) rotateY(-10deg);}
+
+  to { box-shadow: -18px 18px 20px rgba(0, 0, 0, 0.7);
+    filter: hue-rotate(360deg);
+    transform: perspective(1000px) rotateY(10deg);}
+}

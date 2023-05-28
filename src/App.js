@@ -1,250 +1,218 @@
 import React from 'react';
-import './App.css';
+import Button from './components/Button';
 import Card from './components/Card';
-import CardList from './components/CardList';
-import FilterCard from './components/FilterCard';
+import EditCards from './components/EditCards';
 import Form from './components/Form';
-import logo from './logo_tryunfo.png';
-import validateLength from './utils/ValidateLength';
-import validateNumber from './utils/ValidateNumber';
+import Game from './components/Game';
+import Header from './components/Header';
+import Initial from './components/Initial';
+import data from './data/cards';
+import {
+  containsInLowCase, num,
+  showMessageTimeout, validateAttr,
+} from './helpers/functions';
+import { playCardsSound, playClickSound, playStarGameSound } from './helpers/game_sounds';
 
 class App extends React.Component {
   state = {
-    cardInfo: {
-      cardName: '',
-      cardDescription: '',
-      cardAttr1: '',
-      cardAttr2: '',
-      cardAttr3: '',
-      cardImage: '',
-      cardRare: 'Normal',
-      cardTrunfo: false,
-      hasTrunfo: false,
-      isSaveButtonDisabled: true,
+    cardName: '',
+    cardDescription: '',
+    cardAttr1: '0',
+    cardAttr2: '0',
+    cardAttr3: '0',
+    cardImage: '',
+    cardRare: 'daora',
+    cardTrunfo: false,
+    hasTrunfo: this.cardsHasTrunfo(data),
+    isSaveButtonDisabled: true,
+    cards: [...data],
+    filteredCards: [...data],
+    filterFields: {
+      superTrunfo: false,
+      name: '',
+      rare: 'todas',
     },
-    cardDeck: {
-      savedCards: [],
-    },
-    filters: {
-      filterRare: '',
-      filter: '',
-      filterCards: [],
-      superTrunfoCheck: false,
-    },
+    route: 'start',
   };
+
+  startGame = () => {
+    playStarGameSound();
+    this.setState({ route: 'game' });
+  };
+
+  showCards = () => {
+    playClickSound();
+    playCardsSound();
+    this.setState({ route: 'cards' });
+  };
+
+  createCard = () => {
+    playClickSound();
+    this.resetFilters();
+    this.setState({ route: 'createCard' });
+  };
+  // ############################################################## Funções das ROTAS FIM ###########################
 
   validateForm = () => {
-    const { cardInfo: { cardName, cardDescription, cardImage,
-      cardAttr1, cardAttr2, cardAttr3 } } = this.state;
-
-    const resultValidate = validateLength(cardName, cardDescription, cardImage)
-    && validateNumber(cardAttr1, cardAttr2, cardAttr3);
-    return resultValidate;
+    const { cardName, cardDescription, cardImage,
+      cardRare, cardAttr1, cardAttr2, cardAttr3 } = this.state;
+    const valName = cardName.length > 0;
+    const valDescription = cardDescription.length > 0;
+    const valImagem = cardImage.length > 0;
+    const valRaridade = cardRare.length > 0;
+    const maxSomaAttr = 210;
+    const valAttrSoma = num(cardAttr1) + num(cardAttr2) + num(cardAttr3) <= maxSomaAttr;
+    const maxAttr = 90;
+    const valAttr1 = validateAttr(cardAttr1, maxAttr);
+    const valAttr2 = validateAttr(cardAttr2, maxAttr);
+    const valAttr3 = validateAttr(cardAttr3, maxAttr);
+    this.setState(() => ({ isSaveButtonDisabled: !(
+      valName && valDescription && valImagem && valRaridade
+      && valAttrSoma && valAttr1 && valAttr2 && valAttr3) }));
   };
 
-  trunfoVerify = () => {
-    const { cardDeck: { savedCards } } = this.state;
-    return savedCards.some((card) => card.cardTrunfo === true);
+  resetFilters = () => {
+    this.setState((prev) => ({
+      filterFields: {
+        superTrunfo: false,
+        name: '',
+        rare: 'todas',
+      },
+      filteredCards: [...prev.cards],
+    }));
   };
 
-  onInputChange = ({ target }) => {
-    const { name } = target;
-    const { cardTrunfo } = this.state;
+  handleOnChange = ({ target: { id, type, value, checked } }) => {
+    this.setState({ [id]: type === 'checkbox'
+      ? checked : value }, this.validateForm);
+  };
 
-    const value = target.type === 'checkbox' ? !cardTrunfo : target.value;
+  handleSaveButton = () => {
+    playClickSound();
+    showMessageTimeout('Carta salva com sucesso!', 'success');
+    const {
+      cardName,
+      cardDescription,
+      cardAttr1,
+      cardAttr2,
+      cardAttr3,
+      cardImage,
+      cardRare,
+      cardTrunfo,
+      cards,
+    } = this.state;
 
-    this.setState(
-      (prev) => ({
-        cardInfo: {
-          ...prev.cardInfo,
-          [name]: value,
-        },
-      }),
-      () => {
-        const isSaveButtonDisabled = !this.validateForm();
-        this.setState((prev) => ({
-          cardInfo: {
-            ...prev.cardInfo,
-            isSaveButtonDisabled,
-          },
-        }));
+    cards.push({
+      cardName,
+      cardDescription,
+      cardAttr1,
+      cardAttr2,
+      cardImage,
+      cardAttr3,
+      cardRare,
+      cardTrunfo,
+    });
+
+    this.setState({
+      cardName: '',
+      cardDescription: '',
+      cardAttr1: '0',
+      cardAttr2: '0',
+      cardAttr3: '0',
+      cardImage: '',
+      cardRare: 'daora',
+      cardTrunfo: false,
+      hasTrunfo: this.cardsHasTrunfo(cards),
+      isSaveButtonDisabled: true,
+      cards,
+    }, this.setFilteredCards);
+  };
+
+  removeCard = (cartToRemove) => {
+    let { cards } = this.state;
+    cards = cards.filter(({ cardName }) => cardName !== cartToRemove);
+    this.setState({
+      cards,
+      hasTrunfo: this.cardsHasTrunfo(cards),
+    }, this.setFilteredCards);
+    playClickSound();
+    showMessageTimeout('Carta Removida!', 'info');
+  };
+
+  setFilteredCards = () => {
+    const { filterFields: { name, rare, superTrunfo }, cards } = this.state;
+    const filteredCards = cards.filter(
+      ({ cardRare, cardName, cardTrunfo }) => {
+        if (superTrunfo) {
+          return cardTrunfo;
+        }
+        return containsInLowCase(cardName, name)
+      && (rare === 'todas' || cardRare === rare);
       },
     );
+    this.setState({ filteredCards });
   };
 
-  onSaveButtonClick = (event) => {
-    event.preventDefault();
-    const { cardInfo } = this.state;
-    const saveCard = {};
+  filterOnChange = ({ target: { value, id, checked } }) => {
+    const { filterFields } = this.state;
+    if (id === 'trunfo-filter') {
+      filterFields.superTrunfo = checked;
+    } else if (id === 'name-filter') {
+      filterFields.name = value;
+    } else {
+      filterFields.rare = value;
+    }
 
-    Object.keys(cardInfo).forEach((key) => {
-      saveCard[key] = cardInfo[key];
-    });
-
-    this.setState((prev) => ({
-      cardDeck: {
-        savedCards: [...prev.cardDeck.savedCards, saveCard],
-      },
-    }), () => {
-      this.setState((prev) => ((this.trunfoVerify()) ? {
-        cardInfo: {
-          ...prev.cardInfo,
-          cardName: '',
-          cardDescription: '',
-          cardAttr1: '0',
-          cardAttr2: '0',
-          cardAttr3: '0',
-          cardImage: '',
-          cardRare: 'Normal',
-          cardTrunfo: false,
-          hasTrunfo: true,
-        },
-      } : ({
-        cardInfo: {
-          ...prev.cardInfo,
-          cardName: '',
-          cardDescription: '',
-          cardAttr1: '0',
-          cardAttr2: '0',
-          cardAttr3: '0',
-          cardImage: '',
-          cardRare: 'Normal',
-          cardTrunfo: false,
-        },
-      })));
-    });
+    this.setState({ filterFields }, this.setFilteredCards);
   };
 
-  deleteCard = (target) => {
-    const { cardDeck: { savedCards } } = this.state;
-    const filterCard = savedCards.filter((card) => (card.cardName !== target));
+  cardsHasTrunfo(cards) { return cards.some(({ cardTrunfo }) => cardTrunfo); }
 
-    this.setState((prev) => ({
-      cardDeck: {
-        ...prev.cardDeck,
-        savedCards: filterCard,
-      },
-      cardInfo: {
-        ...prev.cardInfo,
-        hasTrunfo: false,
-      },
-    }));
-  };
-
-  filterName = ({ target }) => {
-    this.setState((prev) => ({
-      filters: {
-        ...prev.filters,
-        filter: target.value,
-      },
-    }), () => {
-      const { cardDeck: { savedCards }, filters: { filter } } = this.state;
-      const filteredCard = savedCards.filter((card) => card.cardName.includes(filter));
-      this.setState((prev) => ({
-        filters: {
-          ...prev.filters,
-          filterCards: filteredCard,
-        },
-      }));
-    });
-  };
-
-  filterType = ({ target }) => {
-    const { cardDeck: { savedCards }, filters: { filter } } = this.state;
-
-    const typeFilter = savedCards.filter((card) => card.cardRare === target.value);
-    const typeAndName = typeFilter.filter((card) => card.cardName.includes(filter));
-
-    this.setState((prev) => (target.value === 'todas' ? ({
-      filters: {
-        ...prev.filters,
-        filterCards: savedCards,
-      },
-    }) : ({
-      filters: {
-        ...prev.filters,
-        filterRare: target.value,
-        filterCards: filter.length > 0 ? typeAndName : typeFilter,
-      },
-    })
-    ));
-  };
-
-  filterTrunfo = ({ target }) => {
-    const { cardDeck: { savedCards } } = this.state;
-    const findTrunfo = savedCards.find((card) => card.cardTrunfo === true);
-    this.setState((prev) => ({
-      filters: {
-        ...prev.filters,
-        filterCards: target.checked ? [findTrunfo] : savedCards,
-        superTrunfoCheck: !prev.superTrunfoCheck,
-      },
-    }));
-  };
-
+  // Método de RENDER ###################################
   render() {
-    const { cardInfo, cardDeck: { savedCards },
-      filters: { superTrunfoCheck, filterCards, filter, filterRare } } = this.state;
-
+    const { filteredCards, filterFields, route, cards } = this.state;
     return (
-      <div>
-        <header>
-          <img src={ logo } alt="Logo Trybe" />
-        </header>
-        <div className="cadastrateCard">
-          <div className="form">
-            <h2>Adicione sua Carta</h2>
-            <Form
-              cardName={ cardInfo.cardName }
-              cardDescription={ cardInfo.cardDescription }
-              cardAttr1={ cardInfo.cardAttr1 }
-              cardAttr2={ cardInfo.cardAttr2 }
-              cardAttr3={ cardInfo.cardAttr3 }
-              cardImage={ cardInfo.cardImage }
-              cardRare={ cardInfo.cardRare }
-              cardTrunfo={ cardInfo.cardTrunfo }
-              hasTrunfo={ cardInfo.hasTrunfo }
-              isSaveButtonDisabled={ cardInfo.isSaveButtonDisabled }
-              onInputChange={ this.onInputChange }
-              validateForm={ this.validateForm }
-              onSaveButtonClick={ this.onSaveButtonClick }
-              trunfoVerify={ this.trunfoVerify }
-            />
-          </div>
-          <div className="card">
-            <h2>Pré-visualização</h2>
-            <Card
-              cardName={ cardInfo.cardName }
-              cardDescription={ cardInfo.cardDescription }
-              cardAttr1={ cardInfo.cardAttr1 }
-              cardAttr2={ cardInfo.cardAttr2 }
-              cardAttr3={ cardInfo.cardAttr3 }
-              cardImage={ cardInfo.cardImage }
-              cardRare={ cardInfo.cardRare }
-              cardTrunfo={ cardInfo.cardTrunfo }
-            />
-          </div>
-        </div>
-        <h2 className="title-cardList">Todas as Cartas</h2>
-        <div className="filters">
-          <FilterCard
-            filterTrunfo={ this.filterTrunfo }
-            filterType={ this.filterType }
-            filterName={ this.filterName }
-            superTrunfoCheck={ superTrunfoCheck }
+      <>
+        <Header text="PS TRYUNFO" />
+        {
+          route === 'start' && (
+            <Initial startGame={ this.startGame } />
+          )
+        }
+
+        {route === 'game' && <Game
+          cards={ cards }
+          showCardsClick={ this.showCards }
+        />}
+
+        {
+          route === 'createCard'
+      && (
+        <section className="section__create-card">
+          <Form
+            onInputChange={ this.handleOnChange }
+            { ...this.state }
+            onSaveButtonClick={ this.handleSaveButton }
           />
-        </div>
-        <div className="deckCards">
-          <CardList
-            filterRare={ filterRare }
-            filter={ filter }
-            savedCards={ savedCards }
-            filterCards={ filterCards }
-            deleteCard={ this.deleteCard }
-          />
-        </div>
-      </div>
+          <Card { ...this.state } isPreview />
+          <Button text="Voltar" extraclass="back__button" onClick={ this.showCards } />
+        </section>
+      )
+        }
+
+        { route === 'cards'
+        && (<EditCards
+          filterOnChange={ this.filterOnChange }
+          filterFields={ filterFields }
+          removeCard={ this.removeCard }
+          createCard={ this.createCard }
+          filteredCards={ filteredCards }
+          startGame={ this.startGame }
+        />
+        )}
+      </>
     );
   }
 }
+
 export default App;

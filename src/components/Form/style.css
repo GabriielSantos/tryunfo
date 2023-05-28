@@ -1,0 +1,36 @@
+.Form {
+  align-items: center;
+  background-color: #282828;
+  border: 2px solid #595cba;
+  border-radius: 4px;
+  box-shadow: 8px 8px 8px black;
+  display: flex;
+  flex-direction: column;
+  outline: 8px solid #282828;
+  padding: 8px;
+  row-gap: 12px;
+  width: 400px;
+}
+
+.form__title {
+  text-align: left;
+  width: 100%;
+}
+
+.hasTrunfo {
+  text-align: end;
+  width: 200px;
+}
+
+.atributos {
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
+  margin: 10px 0;
+  width: 100%;
+}
+
+.atributos label {
+  margin: 0 4px;
+  text-align: right;
+}
