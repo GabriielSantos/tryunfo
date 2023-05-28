@@ -8,7 +8,6 @@ import ResidentEvil from './ResidentEvil.png';
 import StarWars from './StarWars.png';
 import daysGone from './daysGone.png';
 import ffVII from './ffVII.png';
-import fifa23 from './fifa23.png';
 import got from './got.png';
 import gow from './gow.png';
 import gtaV from './gtaV.png';
@@ -22,7 +21,6 @@ import uncharted4 from './uncharted4.png';
 const normal = 'daora';
 const raro = 'foda';
 const muitoRaro = 'muito foda';
-
 const cards = [
   {
     cardName: 'The Last of Us',
@@ -240,17 +238,6 @@ const cards = [
     cardAttr3: '60',
     cardImage: Horizon,
     cardRare: raro,
-    cardTrunfo: false,
-  },
-  {
-    cardName: 'FIFA 23',
-    cardDescription:
-    'Não podia faltar uma referência aos apaixonados por Futebol.',
-    cardAttr1: '55',
-    cardAttr2: '10',
-    cardAttr3: '30',
-    cardImage: fifa23,
-    cardRare: normal,
     cardTrunfo: false,
   },
 ];
