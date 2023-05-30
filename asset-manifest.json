@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/tryunfo/static/css/main.4bb4d543.css",
+    "main.css": "/tryunfo/static/css/main.cadafef1.css",
     "main.js": "/tryunfo/static/js/main.90829f77.js",
     "static/media/daysGone.png": "/tryunfo/static/media/daysGone.76ee38bf975366c35256.png",
     "static/media/ResidentEvil.png": "/tryunfo/static/media/ResidentEvil.fbc1b22a6c5800a95315.png",
@@ -31,11 +31,11 @@
     "static/media/zrnic.otf": "/tryunfo/static/media/zrnic.a7b31aee5500aa800d2d.otf",
     "static/media/click_sound.mp3": "/tryunfo/static/media/click_sound.238d39a7566205adcacf.mp3",
     "index.html": "/tryunfo/index.html",
-    "main.4bb4d543.css.map": "/tryunfo/static/css/main.4bb4d543.css.map",
+    "main.cadafef1.css.map": "/tryunfo/static/css/main.cadafef1.css.map",
     "main.90829f77.js.map": "/tryunfo/static/js/main.90829f77.js.map"
   },
   "entrypoints": [
-    "static/css/main.4bb4d543.css",
+    "static/css/main.cadafef1.css",
     "static/js/main.90829f77.js"
   ]
 }
