@@ -75,6 +75,7 @@
   .section__game--over {
     top: calc(50% - 100px);
     width: 300px;
+    z-index: 4;
   }
 
 }

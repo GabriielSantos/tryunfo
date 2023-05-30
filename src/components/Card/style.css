@@ -22,6 +22,7 @@
   padding: 2px;
   transition: all 0.5s;
   width: 250px;
+  position: relative;
 }
 
 .Card__img {
@@ -29,6 +30,7 @@
   pointer-events: none;
   width: 200px;
   z-index: 4;
+  position: relative;
 }
 
 .CardPc {
