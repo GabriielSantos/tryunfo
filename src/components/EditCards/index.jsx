@@ -6,14 +6,6 @@ import Filter from '../Filter';
 import './style.css';
 
 export default class EditCards extends Component {
-  handleAttrClick = (card) => {
-    if (card.cardName === 'Fallen Angel') {
-      playClickSound();
-      const timeout = 600;
-      setTimeout(this.openVideo, timeout);
-    }
-  };
-
   render() {
     const {
       filterOnChange, filterFields, removeCard,
@@ -34,7 +26,6 @@ export default class EditCards extends Component {
               <div key={ card.cardName }>
                 <Card
                   { ...card }
-                  onAttrClick={ () => this.handleAttrClick(card) }
                   isPreview={ false }
                   onRemoveClick={ () => removeCard(card.cardName) }
                 />
