@@ -20,17 +20,17 @@
   outline: 8px solid #282828;
   overflow: hidden;
   padding: 2px;
+  position: relative;
   transition: all 0.5s;
   width: 250px;
-  position: relative;
 }
 
 .Card__img {
   height: 220px;
   pointer-events: none;
-  width: 200px;
-  z-index: 4;
   position: relative;
+  width: 200px;
+  z-index: 3;
 }
 
 .CardPc {
